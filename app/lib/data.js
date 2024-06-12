@@ -49,6 +49,7 @@ const ITEMS_PER_PAGE = 3; // Define the number of items per page
 export const fetchFilteredCars = async (query, currentPage) => {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
+    await connectDb();
     let searchQuery = {
       $or: [
         { make: { $regex: query, $options: "i" } },
