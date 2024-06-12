@@ -3,14 +3,17 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/images/logo.png";
+import logo from "@/assets/images/logo1.png";
+import Logo from "./Logo";
+
+import ThemeToggle from "./ThemeToggle";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const pathname = usePathname();
 
   return (
-    <nav className="bg-blue-700 border-b border-blue-500">
+    <nav className="">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-20 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
@@ -42,51 +45,52 @@ const Navbar = () => {
             </button>
           </div>
 
-          <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-around">
+          <div className="flex flex-1   md:items-stretch md:justify-around ">
             {/* <!-- Logo --> */}
             <Link className="flex flex-shrink-0 items-center" href="/">
-              <Image className="h-10 w-auto" src={logo} alt="autoSalePu" />
+              {/* <Image className="h-15 w-auto" src={logo} alt="autoSalePu" /> */}
+              <Logo />
             </Link>
+
             <div>
-              <span className="hidden md:block text-white text-2xl font-bold ml-2">
-                AutoSalePu
-              </span>
+              <span className="hidden md:block text-white text-2xl font-bold ml-2"></span>
             </div>
             {/* <!-- Desktop Menu Hidden below md screens --> */}
-            <div className="hidden md:ml-6 md:block">
-              <div className="flex space-x-2">
+            <div className="hidden md:ml-5 md:block ">
+              <div className="flex space-x-2 mt-5  ">
                 <Link
                   href="/"
                   className={`${
-                    pathname === "/" ? "bg-black" : ""
-                  } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                    pathname === "/" ? "bg-black text-white" : ""
+                  }  hover:bg-gray-900  hover:text-white  rounded-md px-3 py-2`}
                 >
                   Home
                 </Link>
                 <Link
                   href="/cars"
                   className={`${
-                    pathname === "/cars" ? "bg-black" : ""
-                  } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                    pathname === "/cars" ? "bg-black text-white" : ""
+                  }  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 `}
                 >
                   Cars
                 </Link>
                 <Link
                   href="/finance"
                   className={`${
-                    pathname === "/finance" ? "bg-black" : ""
-                  } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                    pathname === "/finance" ? "bg-black text-white" : ""
+                  }  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                 >
                   Finance
                 </Link>
                 <Link
                   href="/contact"
                   className={`${
-                    pathname === "/contact" ? "bg-black" : ""
-                  } text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+                    pathname === "/contact" ? "bg-black text-white" : ""
+                  }  hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                 >
                   Contact
                 </Link>
+                <ThemeToggle />
               </div>
             </div>
           </div>

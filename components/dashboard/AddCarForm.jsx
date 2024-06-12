@@ -1,10 +1,12 @@
-import React from "react";
+"use client";
+import { fetchMedia } from "@/app/lib/data";
 import { addCar } from "@/app/lib/actions";
+import { SubmitButton } from "./buttons";
 const AddCarForm = () => {
   return (
     <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
       {" "}
-      <form action={addCar}>
+      <form>
         <div className="mb-4">
           <label htmlFor="make" className="block text-gray-700">
             Make
@@ -79,21 +81,7 @@ const AddCarForm = () => {
             <option value="Used">Used</option>
           </select>
         </div>
-        <div className="mb-4">
-          <label htmlFor="serviceHistory" className="block text-gray-700">
-            Service History
-          </label>
-          <select
-            id="serviceHistory"
-            name="serviceHistory"
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            // required
-          >
-            <option value="Full">Full</option>
-            <option value="Partial">Partial</option>
-            <option value="None">None</option>
-          </select>
-        </div>
+
         <div className="mb-4">
           <label htmlFor="color" className="block text-gray-700">
             Color
@@ -130,6 +118,7 @@ const AddCarForm = () => {
             name="imageUrl"
             className="mt-1 block w-full border border-gray-300 rounded-md p-2"
             multiple
+            // required
           />
         </div>
         <div className="mb-4">
@@ -143,12 +132,25 @@ const AddCarForm = () => {
             className="mt-1 block border border-gray-300 rounded-md p-2"
           />
         </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Insert Car
-        </button>
+        {/* <div>
+          <h3>Select Images:</h3>
+          <div className="grid grid-cols-3 gap-4">
+            {images.map((item) => (
+              <div
+                key={item._id}
+                // onClick={() => handleImageSelect(item._id)}
+                // className={`cursor-pointer ${
+                //   selectedImages.includes(item._id)
+                //     ? "border-2 border-blue-500"
+                //     : ""
+                // }`}
+              >
+                <img src={item} alt={item} className="w-full h-auto" />
+              </div>
+            ))}
+          </div>
+        </div> */}
+        <SubmitButton />
       </form>
     </div>
   );

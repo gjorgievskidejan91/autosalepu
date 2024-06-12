@@ -1,11 +1,19 @@
-import AddCarForm from "@/components/dashboard/AddCarForm";
 import React from "react";
+import { fetchMedia } from "@/app/lib/data";
+import Add from "@/components/dashboard/Add";
+import FindByVin from "@/components/dashboard/FindByVin";
+import SearchFilter from "@/components/SearchFilter";
 
-const page = () => {
+const page = async () => {
+  const media = await fetchMedia();
+  const images = media.map((item) => item.url);
+
   return (
-    <div>
-      <h2>Add a car</h2>
-      <AddCarForm />
+    <div className=" border mb-5 dar:text-white mx-5 shadow-lg rounded-lg p-10">
+      <h1 className="text-xl">Add a car</h1>
+      {/* <FindByVin /> */}
+
+      <Add images={images} />
     </div>
   );
 };

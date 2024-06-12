@@ -1,17 +1,17 @@
 import React from "react";
 import { updateCar } from "@/app/lib/actions";
 import { fetchCarById } from "@/app/lib/data";
-
+import Image from "next/image";
 const EditCarForm = async ({ id }) => {
   const car = await fetchCarById(id);
 
   return (
-    <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
+    <div className="max-w-lg mx-auto dark:text-white  bg-white shadow-lg rounded-lg p-6">
       {" "}
       <form action={updateCar}>
         <input type="hidden" name="id" value={id} />
         <div className="mb-4">
-          <label htmlFor="make" className="block text-gray-700">
+          <label htmlFor="make" className="block   text-gray-700">
             Make
           </label>
           <input
@@ -136,14 +136,14 @@ const EditCarForm = async ({ id }) => {
         </div>
         <div className="mb-4">
           <label htmlFor="imageUrl" className="block text-gray-700">
-            Image URL
+            Add more photos
           </label>
           <input
-            type="text"
+            type="file"
             id="imageUrl"
             name="imageUrl"
-            defaultValue={car.imageUrl}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+            multiple
             required
           />
         </div>
@@ -158,6 +158,15 @@ const EditCarForm = async ({ id }) => {
             defaultChecked={car.available}
             className="mt-1 block border border-gray-300 rounded-md p-2"
           />
+        </div>
+        <div className="mb-4">
+          <div className="grid grid-cols-2">
+            {car.imageUrl.map((image, index) => (
+              <div key={index}>
+                <Image src={image} width={33} height={33} alt={image} />
+              </div>
+            ))}
+          </div>
         </div>
         <button
           type="submit"

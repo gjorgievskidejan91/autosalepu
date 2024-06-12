@@ -1,6 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,8 +16,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        <div className="main">{children}</div>
+        <ThemeProvider attribute="class">
+          <Navbar />
+          <Toaster position="bottom-center" />
+          <div className="mt-10">{children}</div>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -3,7 +3,25 @@
 import Link from "next/link";
 import { PencilIcon, TrashIcon } from "lucide-react";
 import { deleteCar, updateCarStatus } from "@/app/lib/actions";
+import { useFormStatus } from "react-dom";
+import { deleteMedia } from "@/app/lib/media";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
+export function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <>
+      <button
+        className="rounded-md border bg-sky-800 text-white p-2 hover:bg-gray-100"
+        // disabled={pending}
+      >
+        {pending ? "Adding" : "Add"}
+      </button>
+    </>
+  );
+}
 export function EditButton({ id }) {
   return (
     <Link
@@ -14,6 +32,26 @@ export function EditButton({ id }) {
     </Link>
   );
 }
+
+export const DeleteMedia = ({ id }) => {
+  const handleDelete = async () => {
+    try {
+      const res = await deleteMedia(id);
+      toast.success(res.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return (
+    <button
+      className="rounded-md  border p-2 hover:bg-gray-100"
+      onClick={handleDelete}
+    >
+      <span className="sr-only">Delete</span>
+      <TrashIcon className="w-5" color="red" />
+    </button>
+  );
+};
 export function DeleteButton({ id }) {
   const handleDelete = async () => {
     const isConfirmed = window.confirm(
@@ -52,7 +90,7 @@ export function UpdateButton({ id }) {
 
     if (isConfirmed) {
       try {
-        const res = await updateCar(id);
+        const res = await updateCarStatus(id);
 
         if (res.error) {
           console.log("Filed");

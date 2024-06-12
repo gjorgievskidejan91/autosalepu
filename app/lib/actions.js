@@ -2,38 +2,73 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import connectDb from "@/config/database";
-import { Car } from "./models";
-import cloudinary from "@/config/cloudinary";
+import { Car, Media } from "./models";
+
+import { put } from "@vercel/blob";
+import { model } from "mongoose";
 
 export const addCar = async (formData) => {
   const data = Object.fromEntries(formData);
+  data.available = data.available === "on";
+  data.imageUrl = JSON.parse(data.imageUrl);
 
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
+  console.log(data);
+  try {
+    await connectDb();
+    const newCar = new Car({
+      make: data.make,
+      model: data.model,
+      year: data.year,
+      bodyClass: data.bodyClass,
+      engineDisplacement: data.engineDisplacement,
+      engineCylinders: data.engineCylinders,
+      engineHP: data.engineHP,
+      fuelTypePrimary: data.fuelTypePrimary,
+      price: data.price,
+      mileage: data.mileage,
+      transmission: data.transmission,
+      imageUrl: data.imageUrl,
+      available: data.available,
+      isFeatured: data.isFeatured,
+    });
+    console.log(newCar);
+    await newCar.save();
+  } catch (error) {
+    console.log(error);
+  }
+  // revalidatePath("/dashboard");
+  // redirect("/dashboard");
+};
+
+export const updateCar = async (formData) => {
+  const data = Object.fromEntries(formData);
+
+  data.available = data.available === "on";
   const images = formData
     .getAll("imageUrl")
     .filter((image) => image.name !== "");
-  console.log(images);
-  data.available = data.available === "on";
 
   const imageUploadPromises = [];
 
+  if (images[0].name === "undefined") {
+    console.log("no files ");
+    throw new Error("No images");
+  }
+
   for (const image of images) {
     // Assuming image is a File object, extract the file data
-    const imageBuffer = await image.arrayBuffer();
-    const imageArray = Array.from(new Uint8Array(imageBuffer));
-    const imageData = Buffer.from(imageArray);
-
-    // Convert the image data to base64
-    const imageBase64 = imageData.toString("base64");
-
-    // Upload the image data as a base64 string to Cloudinary
-    const result = await cloudinary.uploader.upload(
-      `data:image/png;base64,${imageBase64}`,
-      {
-        folder: "propertypulsedev",
-      }
-    );
-
-    imageUploadPromises.push(result.secure_url);
+    try {
+      const blob = await put(image.name, image, {
+        access: "public",
+      });
+      imageUploadPromises.push(blob.url);
+      console.log(" image uploded");
+      await new Media({ url: blob.url }).save();
+      console.log("success DB");
+    } catch (error) {
+      console.log(error);
+    }
   }
   // Wait for all image uploads to complete
   const uploadedImages = await Promise.all(imageUploadPromises);
@@ -41,21 +76,7 @@ export const addCar = async (formData) => {
   // Add the uploaded images to the propertyData object
   data.imageUrl = uploadedImages;
 
-  const newCar = new Car(data);
-
-  try {
-    await newCar.save();
-  } catch (error) {
-    console.log(error);
-  }
-  revalidatePath("/dashboard");
-  redirect("/dashboard");
-};
-
-export const updateCar = async (formData) => {
-  const data = Object.fromEntries(formData);
-
-  data.available = data.available === "on";
+  console.log(data);
 
   try {
     await Car.findByIdAndUpdate(data.id, data);
@@ -72,7 +93,10 @@ export const updateCarStatus = async (id) => {
 
   try {
     await Car.findByIdAndUpdate(id, { available: false });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
+  revalidatePath(`/dashboard`);
 };
 export const deleteCar = async (id) => {
   try {

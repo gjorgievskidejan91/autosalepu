@@ -1,6 +1,6 @@
 import React from "react";
 import { fetchCars } from "@/app/lib/data";
-import Link from "next/link";
+import Image from "next/image";
 import { EditButton, DeleteButton, UpdateButton } from "./buttons";
 
 const CarsTable = async () => {
@@ -11,10 +11,10 @@ const CarsTable = async () => {
   }
   return (
     <div>
-      <div className="container mx-auto">
+      <div className="container mx-auto my-5">
         <h2 className="text-2xl font-bold mb-6">Car List</h2>
         <div className="overflow-x-auto px-5">
-          <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <table className="min-w-full border-x-2  shadow-md rounded-lg overflow-hidden">
             <thead>
               <tr>
                 <th className="py-2 px-4 bg-gray-200 font-bold uppercase text-sm text-gray-600 text-left">
@@ -45,9 +45,11 @@ const CarsTable = async () => {
               {cars.map((car, index) => (
                 <tr key={index}>
                   <td className="py-2 px-2 border-b border-gray-200">
-                    <img
+                    <Image
                       src={car.imageUrl[0]}
                       alt="Car Image"
+                      width={50}
+                      height={50}
                       className="w-16 h-16 object-cover"
                     />
                   </td>
