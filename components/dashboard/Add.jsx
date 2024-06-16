@@ -268,7 +268,6 @@ const Add = ({ images }) => {
           </button>
 
           {toggle && <SelectImages images={images} onSelect={onSelect} />}
-          {/* <SelectImages images={images} onSelect={onSelect} /> */}
         </div>
         <SubmitButton />
       </form>

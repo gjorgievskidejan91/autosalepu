@@ -1,4 +1,5 @@
 import { mongoose, model, models } from "mongoose";
+const { Schema } = mongoose;
 
 const carSchema = new mongoose.Schema(
   {
@@ -99,7 +100,33 @@ const formSchema = new mongoose.Schema({
 const testSchema = new mongoose.Schema({
   dormData: String,
 });
+
+export const messageSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+    },
+    message: {
+      type: String,
+      required: true,
+    },
+    carOfInterest: {
+      type: Schema.Types.ObjectId,
+      ref: "Car",
+    },
+  },
+  { timestamps: true }
+);
 export const Car = models.Car || model("Car", carSchema);
 export const Media = models.Media || model("Media", mediaSchema);
 export const Form = models.Form || model("Form", formSchema);
 export const Dorm = models.Dorm || model("Dorm", testSchema);
+export const Message = models.Message || model("Message", messageSchema);

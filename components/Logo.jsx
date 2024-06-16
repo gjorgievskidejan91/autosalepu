@@ -1,10 +1,30 @@
 // components/Logo.js
+"use client";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const Logo = () => {
+  const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) {
+    return (
+      <div className="flex items-center">
+        <Image
+          src="/logo1.png"
+          alt="Logo"
+          className="h-20 w-full"
+          width={150}
+          height={100}
+          priority
+        />
+      </div>
+    );
+  }
   return (
     <div className="flex items-center">
       {theme === "dark" ? (

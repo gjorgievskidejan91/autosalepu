@@ -12,7 +12,7 @@ const HomeCars = async () => {
           <div className="container-xl lg:container m-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {cars.length === 0 ? (
-                <p>No Properties Found</p>
+                <p>No Cars Found</p>
               ) : (
                 cars.map((car, index) => <CarCard car={car} key={index} />)
               )}

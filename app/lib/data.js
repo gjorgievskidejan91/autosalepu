@@ -1,7 +1,9 @@
 import connectDb from "@/config/database";
-import { Car, Media, Form } from "./models";
+import { Car, Media, Form, Message } from "./models";
+import { unstable_noStore as noStore } from "next/cache";
 
 export const fetchCars = async () => {
+  noStore();
   try {
     await connectDb();
 
@@ -24,6 +26,7 @@ export const fetchCars = async () => {
 };
 
 export const fetchCarById = async (id) => {
+  noStore();
   try {
     await connectDb();
     const car = await Car.findById(id);
@@ -43,10 +46,11 @@ export const fetchMedia = async () => {
   }
 };
 
-const ITEMS_PER_PAGE = 3; // Define the number of items per page
+const ITEMS_PER_PAGE = 4; // Define the number of items per page
 
 // Define a function for fetching filtered cars
 export const fetchFilteredCars = async (query, currentPage) => {
+  noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     await connectDb();
@@ -71,6 +75,26 @@ export const fetchFilteredCars = async (query, currentPage) => {
     throw new Error("Failed to fetch cars.");
   }
 };
+
+export const fetchLatestCars = async () => {
+  noStore();
+  try {
+    await connectDb();
+
+    const data = await Car.find({}).sort({ createdAt: -1 }).limit(5);
+    const plainData = data.map((car) => ({
+      ...car.toObject(),
+      _id: car._id.toString(),
+      createdAt: car.createdAt.toISOString(),
+      updatedAt: car.updatedAt.toISOString(),
+    }));
+    return plainData;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const fetchForms = async () => {
   try {
     await connectDb();
@@ -78,5 +102,22 @@ export const fetchForms = async () => {
     return forms;
   } catch (error) {
     console.log(error);
+  }
+};
+export const fetchMessages = async () => {
+  try {
+    await connectDb();
+
+    const messages = await Message.find({})
+      .populate({
+        path: "carOfInterest",
+        select: "make model", // Select only the make and model fields
+      })
+      .exec();
+
+    return messages;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to fetch messages");
   }
 };

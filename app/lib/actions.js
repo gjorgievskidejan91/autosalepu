@@ -2,42 +2,24 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import connectDb from "@/config/database";
-import { Car, Media } from "./models";
-
+import { Car, Media, Message } from "./models";
+import { contactFormSchema } from "./formSchemas";
 import { put } from "@vercel/blob";
-import { model } from "mongoose";
 
 export const addCar = async (formData) => {
   const data = Object.fromEntries(formData);
   data.available = data.available === "on";
   data.imageUrl = JSON.parse(data.imageUrl);
 
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
-  console.log(data);
   try {
     await connectDb();
-    const newCar = new Car({
-      make: data.make,
-      model: data.model,
-      year: data.year,
-      bodyClass: data.bodyClass,
-      engineDisplacement: data.engineDisplacement,
-      engineCylinders: data.engineCylinders,
-      engineHP: data.engineHP,
-      fuelTypePrimary: data.fuelTypePrimary,
-      price: data.price,
-      mileage: data.mileage,
-      transmission: data.transmission,
-      imageUrl: data.imageUrl,
-      available: data.available,
-      isFeatured: data.isFeatured,
-    });
+    const newCar = new Car(data);
     console.log(newCar);
     await newCar.save();
   } catch (error) {
     console.log(error);
   }
-  // revalidatePath("/dashboard");
+  revalidatePath("/dashboard");
   // redirect("/dashboard");
 };
 
@@ -106,4 +88,24 @@ export const deleteCar = async (id) => {
     console.error("Error deleting violation:", error);
   }
   revalidatePath(`/dashboard`);
+};
+
+export const sendMessage = async (formData) => {
+  const parse = contactFormSchema.safeParse(formData);
+
+  if (!parse.success) {
+    return { error: "Filed Validation" };
+  }
+
+  try {
+    await connectDb();
+    const newMessage = new Message(parse.data);
+
+    await newMessage.save();
+    revalidatePath("/dashboard/messages");
+    return { message: "You have successfully send a message" };
+  } catch (error) {
+    console.log(error);
+    return { error: "Filed to send, Database Error" };
+  }
 };

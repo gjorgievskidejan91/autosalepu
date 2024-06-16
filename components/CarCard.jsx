@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Calendar, Settings, Car, Gauge } from "lucide-react"; // Importing required icons from Lucide-react
+
 const CarCard = ({ car }) => {
   return (
     <div className="relative dark:bg-slate-700 shadow-lg rounded-lg overflow-hidden">
@@ -18,19 +20,22 @@ const CarCard = ({ car }) => {
       <div className="p-6">
         <div className="flex justify-between items-baseline">
           <h2 className="text-xl font-bold">
-            {car.year} {car.make} {car.model}
+            {car.make} {car.model}
           </h2>
         </div>
 
-        <div className="mt-4">
-          <p className="text-gray-700 dark:text-white">📅 Year: {car.year}</p>
-          <p className="text-gray-700 dark:text-white">
-            🚗 Mileage: {car.mileage} miles
+        <div className="mt-4 space-y-2">
+          <p className="text-gray-700 dark:text-white flex items-center">
+            <Calendar className="mr-2" /> Year: {car.year}
           </p>
-          <p className="text-gray-700 dark:text-white">⚙️ Condition: Used</p>
-
-          <p className="text-gray-700 dark:text-white">
-            ⚙️ Transmission: {car.transmission}
+          <p className="text-gray-700 dark:text-white flex items-center">
+            <Gauge className="mr-2" /> Mileage: {car.mileage} miles
+          </p>
+          <p className="text-gray-700 dark:text-white flex items-center">
+            <Settings className="mr-2" /> Transmission: {car.transmission}
+          </p>
+          <p className="text-gray-700 dark:text-white flex items-center">
+            <Car className="mr-2" /> Engine: {car.engineDisplacement} L
           </p>
         </div>
 

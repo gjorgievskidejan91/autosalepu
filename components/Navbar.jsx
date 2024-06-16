@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+
 import Link from "next/link";
-import logo from "@/assets/images/logo1.png";
+
 import Logo from "./Logo";
 
 import ThemeToggle from "./ThemeToggle";
@@ -110,12 +110,28 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              href="/properties"
+              href="/cars"
               className={`${
-                pathname === "/properties" ? "bg-black" : ""
+                pathname === "/cars" ? "bg-black" : ""
               } text-white block rounded-md px-3 py-2 text-base font-medium`}
             >
-              Properties
+              Cars
+            </Link>
+            <Link
+              href="/finance"
+              className={`${
+                pathname === "/finance" ? "bg-black" : ""
+              } text-white block rounded-md px-3 py-2 text-base font-medium`}
+            >
+              Finance
+            </Link>
+            <Link
+              href="/contact"
+              className={`${
+                pathname === "/contact" ? "bg-black" : ""
+              } text-white block rounded-md px-3 py-2 text-base font-medium`}
+            >
+              Contact
             </Link>
           </div>
         </div>

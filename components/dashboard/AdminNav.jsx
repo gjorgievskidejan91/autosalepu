@@ -31,6 +31,22 @@ const AdminNav = () => {
         >
           Media
         </Link>
+        <Link
+          href="/dashboard/finance"
+          className={`${
+            pathname === "/dashboard/finance" ? "bg-black" : ""
+          } text-white hover:bg-gray-900 hover:text-white bg-blue-500 rounded-md px-3 py-2`}
+        >
+          Finance
+        </Link>
+        <Link
+          href="/dashboard/messages"
+          className={`${
+            pathname === "/dashboard/messages" ? "bg-black" : ""
+          } text-white hover:bg-gray-900 hover:text-white bg-blue-500 rounded-md px-3 py-2`}
+        >
+          Messages
+        </Link>
       </div>
     </div>
   );

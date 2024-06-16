@@ -4,6 +4,16 @@ import { redirect } from "next/navigation";
 import connectDb from "@/config/database";
 import { Form } from "./models";
 
+import { z } from "zod";
+
+const formSchema = z.object({
+  username: z.string().min(3, {
+    message: "Username must be at least 3 characters.",
+  }),
+});
+
+const CreateForm = formSchema.omit({});
+
 export const sendFinanceForm = async (formData) => {
   try {
     await connectDb();
@@ -15,5 +25,24 @@ export const sendFinanceForm = async (formData) => {
     return { message: "Successfuly Send!", status: 200 };
   } catch (error) {
     return { message: "Failed to send a form" };
+  }
+};
+
+export const example = async (formData) => {
+  const validatedFields = CreateForm.safeParse(formData);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Send Form.",
+    };
+  }
+
+  try {
+    await connectDb();
+
+    return { message: "Successfully yea", status: 200 };
+  } catch (error) {
+    return { message: "Database error" };
   }
 };

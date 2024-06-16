@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
-import Image from "next/image";
-import logo from "@/assets/images/logo.png";
+
 import Link from "next/link";
 import Logo from "./Logo";
 
 const Footer = () => {
   return (
     <div>
-      <footer className="bg-gray-200 dark:bg-slate-700 dark:text-white py-4 mt-auto">
+      <footer className="bg-gray-200 dark:bg-slate-900 dark:text-white py-4 mt-auto">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
           <div className="mb-4 md:mb-0">
             <Link className="flex flex-shrink-0 items-center" href="/">
@@ -18,16 +17,16 @@ const Footer = () => {
           <div className="flex flex-wrap justify-center md:justify-start mb-4 md:mb-0">
             <ul className="flex space-x-4">
               <li>
-                <a href="/properties.html">Properties</a>
+                <Link href="/cars">Cars</Link>
               </li>
               <li>
-                <a href="/terms.html">Terms of Service</a>
+                <a href="/contact">Contact</a>
               </li>
             </ul>
           </div>
           <div>
             <p className="text-sm text-gray-500 mt-2 md:mt-0 dark:text-white">
-              &copy; 2024 PropertyPulse. All rights reserved.
+              &copy; 2024 AutoSalePu. All rights reserved.
             </p>
           </div>
         </div>

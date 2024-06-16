@@ -7,6 +7,8 @@ import { useFormStatus } from "react-dom";
 import { deleteMedia } from "@/app/lib/media";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function SubmitButton() {
   const { pending } = useFormStatus();
@@ -109,5 +111,32 @@ export function UpdateButton({ id }) {
         Mark As sold
       </button>
     </form>
+  );
+}
+
+export function MobileCallButton() {
+  return (
+    <button className="w-full md:hidden mt-2 bg-green-500 text-white py-2 rounded-md">
+      <a href="tel:+1234567890">Call Us</a>
+    </button>
+  );
+}
+
+export function BackButton() {
+  const router = useRouter();
+
+  function handleClick(e) {
+    e.preventDefault();
+    router.back();
+  }
+  return (
+    <button
+      onClick={handleClick}
+      className="flex items-center px-4 py-2 mb-5 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+      style={{ marginTop: "-33px" }}
+    >
+      <ArrowLeft className="mr-2" />
+      Back
+    </button>
   );
 }

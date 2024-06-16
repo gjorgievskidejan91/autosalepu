@@ -1,5 +1,15 @@
 import { z } from "zod";
 
+export const contactFormSchema = z.object({
+  name: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  email: z.string().email({ message: "Enter Valid Email" }),
+  phone: z.string().optional(),
+  message: z.string().min(10, { message: "Message is required" }),
+  carOfInterest: z.string().optional(),
+});
+
 export const financeFormSchema = z.object({
   vehicleOfInterest: z
     .string()
