@@ -8,9 +8,8 @@ const CarCard = ({ car }) => {
       <Image
         src={car.imageUrl[0]}
         alt=""
-        height={0}
-        width={0}
-        sizes="100vw"
+        height={150}
+        width={150}
         className="w-full h-auto rounded-t-xl"
       />
       <div className="absolute top-2 right-2 bg-blue-500 text-white px-3 py-1 rounded-bl-lg">
