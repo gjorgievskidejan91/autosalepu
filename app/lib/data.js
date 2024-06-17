@@ -37,9 +37,10 @@ export const fetchCarById = async (id) => {
 };
 
 export const fetchMedia = async () => {
+  noStore();
   try {
     await connectDb();
-    const media = await Media.find({});
+    const media = await Media.find({}).sort({ createdAt: -1 }).limit(10);
     return media;
   } catch (error) {
     console.log(error);
