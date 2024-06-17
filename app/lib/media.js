@@ -1,5 +1,5 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag, unstable_noStore } from "next/cache";
 import { redirect } from "next/navigation";
 import connectDb from "@/config/database";
 import { Media } from "./models";
@@ -7,6 +7,7 @@ import cloudinary from "@/config/cloudinary";
 import { put } from "@vercel/blob";
 
 export const addMedia = async (formData) => {
+  unstable_noStore();
   try {
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -32,7 +33,7 @@ export const addMedia = async (formData) => {
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/dashboard/media");
+  revalidatePath("/");
   redirect("/dashboard/media");
 };
 export const deleteMedia = async (id) => {
