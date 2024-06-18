@@ -1,7 +1,7 @@
 import { LatestCarousel } from "./LatestCarousel";
 import { fetchLatestCars } from "@/app/lib/data";
 const LatestCars = async () => {
-  const cars = await fetchLatestCars();
+  const cars = await fetchLatestCars(5);
 
   return (
     <div className=" md:max-w-screen-xl mx-auto border">

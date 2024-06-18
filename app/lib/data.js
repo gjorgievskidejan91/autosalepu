@@ -2,31 +2,9 @@ import connectDb from "@/config/database";
 import { Car, Media, Form, Message } from "./models";
 import { unstable_noStore as noStore } from "next/cache";
 
-export const fetchCars = async () => {
-  noStore();
-  try {
-    await connectDb();
+const ITEMS_PER_PAGE = 8; // Define the number of items per page
 
-    // Fetch cars and sort by createdAt in descending order
-    const data = await Car.find({})
-      .limit(4)
-      .sort({ available: -1, createdAt: -1 });
-
-    // Convert each car document to a plain object
-    const plainData = data.map((car) => ({
-      ...car.toObject(),
-      _id: car._id.toString(),
-      createdAt: car.createdAt.toISOString(),
-      updatedAt: car.updatedAt.toISOString(),
-    }));
-
-    return plainData;
-  } catch (error) {
-    console.error("Error fetching cars:", error);
-    throw new Error("Failed to fetch cars.");
-  }
-};
-
+//dashboard edit page, CarDetail
 export const fetchCarById = async (id) => {
   noStore();
   try {
@@ -48,19 +26,6 @@ export const fetchCarById = async (id) => {
     throw error;
   }
 };
-
-export const fetchMedia = async () => {
-  noStore();
-  try {
-    await connectDb();
-    const media = await Media.find({}).sort({ createdAt: -1 }).limit(50);
-    return media;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const ITEMS_PER_PAGE = 8; // Define the number of items per page
 
 // Define a function for fetching filtered cars
 export const fetchFilteredCars = async (query, currentPage) => {
@@ -91,14 +56,15 @@ export const fetchFilteredCars = async (query, currentPage) => {
   }
 };
 
-export const fetchLatestCars = async () => {
+//LatestCar carousel,finance, homeCars,
+export const fetchLatestCars = async (itemsPerPage) => {
   noStore();
   try {
     await connectDb();
 
     const data = await Car.find({})
       .sort({ available: -1, createdAt: -1 })
-      .limit(5);
+      .limit(itemsPerPage);
     const plainData = data.map((car) => ({
       ...car.toObject(),
       _id: car._id.toString(),
@@ -113,8 +79,7 @@ export const fetchLatestCars = async () => {
 };
 
 // Fetch total cars for pagination search ////
-
-export async function fetchTotalCars(query) {
+export const fetchTotalCars = async (query) => {
   try {
     await connectDb();
 
@@ -136,9 +101,21 @@ export async function fetchTotalCars(query) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch total number of cars.");
   }
-}
+};
 
-// Fetch Forms
+//add car , edit car , media page ,
+export const fetchMedia = async () => {
+  noStore();
+  try {
+    await connectDb();
+    const media = await Media.find({}).sort({ createdAt: -1 }).limit(50);
+    return media;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Fetch Forms /dashboard/forms
 export const fetchForms = async () => {
   noStore();
   try {
@@ -149,6 +126,8 @@ export const fetchForms = async () => {
     console.log(error);
   }
 };
+
+//dashboard/messages
 export const fetchMessages = async () => {
   try {
     await connectDb();

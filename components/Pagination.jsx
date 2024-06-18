@@ -6,6 +6,7 @@ import Link from "next/link";
 import { generatePagination } from "@/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 
+//handles next, prev changes where id is showCars
 function scrollToShowCars() {
   const showCarsElement = document.getElementById("showCars");
   if (showCarsElement) {

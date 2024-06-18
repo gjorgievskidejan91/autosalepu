@@ -1,28 +1,26 @@
-"use client";
-
 import { useState } from "react";
 import Image from "next/image";
-const SelectImages = ({ images, onSelect }) => {
-  const [selectedImages, setSelectedImages] = useState([]);
+
+const SelectImages = ({ selectedI, images, onSelect }) => {
+  const [selectedImages, setSelectedImages] = useState(selectedI);
+
   const handleImageSelect = (imageId) => {
     const updatedSelectedImages = selectedImages.includes(imageId)
       ? selectedImages.filter((id) => id !== imageId)
       : [...selectedImages, imageId];
 
     setSelectedImages(updatedSelectedImages);
-    updatedSelectedImages.map((image) => console.log(image));
-    console.log(updatedSelectedImages);
     onSelect(updatedSelectedImages);
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-4">
       {images.map((item, index) => (
         <div
           key={index}
           onClick={() => handleImageSelect(item)}
-          className={`cursor-pointer ${
-            selectedImages.includes(item) ? "border-2 border-blue-500" : ""
+          className={`cursor-pointer relative ${
+            selectedImages.includes(item) ? "border-4 border-blue-500" : ""
           }`}
         >
           <Image
@@ -32,6 +30,11 @@ const SelectImages = ({ images, onSelect }) => {
             alt={item}
             className="w-full h-auto"
           />
+          {selectedImages.includes(item) && (
+            <span className="absolute top-2 left-2 bg-blue-500 text-white rounded-full px-2 font-bold">
+              {selectedImages.indexOf(item) + 1}
+            </span>
+          )}
         </div>
       ))}
     </div>

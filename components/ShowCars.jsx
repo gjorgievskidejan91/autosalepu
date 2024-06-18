@@ -2,6 +2,7 @@ import CarCard from "./CarCard";
 import { fetchFilteredCars } from "@/app/lib/data";
 
 const ShowCars = async ({ query, currentPage }) => {
+  // fetching by query and page, by defult fetches latest
   const cars = await fetchFilteredCars(query, currentPage);
 
   if (!cars) {

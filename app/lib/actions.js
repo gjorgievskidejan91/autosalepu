@@ -2,9 +2,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import connectDb from "@/config/database";
-import { Car, Media, Message } from "./models";
+import { Car, Message } from "./models";
 import { contactFormSchema } from "./formSchemas";
-import { put } from "@vercel/blob";
 
 export const addCar = async (formData) => {
   const data = Object.fromEntries(formData);

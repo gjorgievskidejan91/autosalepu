@@ -5,9 +5,13 @@ import { updateCar } from "@/app/lib/actions";
 import { SubmitButton } from "./buttons";
 import SelectImages from "./SelectImages";
 const EditCarForm = ({ car, images }) => {
-  const [selectedImages, setSelectedImages] = useState([]);
+  const carImages = car.imageUrl;
+  const [selectedImages, setSelectedImages] = useState(carImages);
   const [toggle, setToggle] = useState(false);
+
   const [carDetails, setCarDetails] = useState(car);
+
+  console.log(typeof carImages);
 
   const onSelect = (images) => {
     setSelectedImages(images);
@@ -16,6 +20,7 @@ const EditCarForm = ({ car, images }) => {
     e.preventDefault();
     setToggle(!toggle);
   };
+
   return (
     <div>
       <form action={updateCar}>
@@ -237,7 +242,13 @@ const EditCarForm = ({ car, images }) => {
             <h3>Create Gallery:</h3>
           </button>
 
-          {toggle && <SelectImages images={images} onSelect={onSelect} />}
+          {toggle && (
+            <SelectImages
+              images={images}
+              selectedI={selectedImages}
+              onSelect={onSelect}
+            />
+          )}
         </div>
         <SubmitButton />
       </form>

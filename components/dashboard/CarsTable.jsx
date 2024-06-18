@@ -1,14 +1,15 @@
 import React from "react";
-import { fetchCars } from "@/app/lib/data";
+import { fetchFilteredCars } from "@/app/lib/data";
 import Image from "next/image";
 import { EditButton, DeleteButton, UpdateButton } from "./buttons";
 
-const CarsTable = async () => {
-  const cars = await fetchCars();
+const CarsTable = async ({ query, currentPage }) => {
+  const cars = await fetchFilteredCars(query, currentPage);
 
-  if (cars.length === 0) {
-    return <h2>No cars found</h2>;
+  if (!cars) {
+    return <h2>No cars data</h2>;
   }
+
   return (
     <div>
       <div className="px-3 mx-auto my-5">
@@ -50,7 +51,7 @@ const CarsTable = async () => {
                       alt="Car Image"
                       width={50}
                       height={50}
-                      className="w-16 h-16 object-cover"
+                      className="w-16 h-16 object-cover rounded-xl"
                     />
                   </td>
                   <td className="py-2 px-4 border-b border-gray-200">
@@ -74,9 +75,6 @@ const CarsTable = async () => {
                     )}
                   </td>
                   <td className="py-2 px-4 border-b border-gray-200">
-                    {/* <Link href={`/dashboard/edit/${car._id.toString()}`}>
-                      <button className="bg-gray-300">Edit</button>
-                    </Link> */}
                     <div className="flex gap-3">
                       <EditButton id={car._id.toString()} />
                       <DeleteButton id={car._id.toString()} />

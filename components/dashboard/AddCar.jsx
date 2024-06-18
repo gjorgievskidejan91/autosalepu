@@ -4,7 +4,7 @@ import { addCar } from "@/app/lib/actions";
 import { SubmitButton } from "./buttons";
 import SelectImages from "./SelectImages";
 
-const Add = ({ images }) => {
+const AddCar = ({ images }) => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [toggle, setToggle] = useState(false);
 
@@ -49,7 +49,7 @@ const Add = ({ images }) => {
     e.preventDefault();
     setToggle(!toggle);
   };
-  console.log(vin, "hello");
+
   return (
     <div>
       <form action={addCar}>
@@ -262,11 +262,16 @@ const Add = ({ images }) => {
           <input type="checkbox" name="available" defaultChecked={true} />
         </label>
         <div className="m-10">
-          <button onClick={handleToggle}>
+          <button
+            onClick={handleToggle}
+            className="rounded-md border p-2  hover:ring-2  "
+          >
             <h3>Create Gallery:</h3>
           </button>
 
-          {toggle && <SelectImages images={images} onSelect={onSelect} />}
+          {toggle && (
+            <SelectImages images={images} onSelect={onSelect} selectedI={[]} />
+          )}
         </div>
         <SubmitButton />
       </form>
@@ -274,4 +279,4 @@ const Add = ({ images }) => {
   );
 };
 
-export default Add;
+export default AddCar;

@@ -1,10 +1,11 @@
 import CarCard from "./CarCard";
 import Link from "next/link";
-import { fetchCars } from "@/app/lib/data";
+import { fetchLatestCars } from "@/app/lib/data";
 
 const HomeCars = async () => {
-  const cars = await fetchCars();
-  // console.log(cars);
+  //the number is limit per page
+  const cars = await fetchLatestCars(4);
+
   return (
     <div>
       <>
