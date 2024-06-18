@@ -8,7 +8,9 @@ export const fetchCars = async () => {
     await connectDb();
 
     // Fetch cars and sort by createdAt in descending order
-    const data = await Car.find({}).limit(4).sort({ createdAt: -1 });
+    const data = await Car.find({})
+      .limit(4)
+      .sort({ available: -1, createdAt: -1 });
 
     // Convert each car document to a plain object
     const plainData = data.map((car) => ({
@@ -58,7 +60,7 @@ export const fetchMedia = async () => {
   }
 };
 
-const ITEMS_PER_PAGE = 4; // Define the number of items per page
+const ITEMS_PER_PAGE = 8; // Define the number of items per page
 
 // Define a function for fetching filtered cars
 export const fetchFilteredCars = async (query, currentPage) => {
@@ -94,7 +96,9 @@ export const fetchLatestCars = async () => {
   try {
     await connectDb();
 
-    const data = await Car.find({}).sort({ createdAt: -1 }).limit(5);
+    const data = await Car.find({})
+      .sort({ available: -1, createdAt: -1 })
+      .limit(5);
     const plainData = data.map((car) => ({
       ...car.toObject(),
       _id: car._id.toString(),
