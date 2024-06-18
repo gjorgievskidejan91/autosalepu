@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import connectDb from "@/config/database";
 import { Media } from "./models";
 import cloudinary from "@/config/cloudinary";
-import { put } from "@vercel/blob";
+import { put, del } from "@vercel/blob";
 
 export const addMedia = async (formData) => {
   try {
@@ -32,14 +32,17 @@ export const addMedia = async (formData) => {
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/");
+  revalidatePath("/dashboard/media");
   redirect("/dashboard/media");
 };
-export const deleteMedia = async (id) => {
-  try {
-    await connectDb();
 
-    await Media.findByIdAndDelete(id);
+export const deleteMedia = async (imageUrl, mediaId) => {
+  console.log(imageUrl);
+  console.log(mediaId);
+  try {
+    await Media.findByIdAndDelete(mediaId);
+    await del(imageUrl);
+
     revalidatePath("/dashboard/media");
     return { message: "success" };
   } catch (error) {

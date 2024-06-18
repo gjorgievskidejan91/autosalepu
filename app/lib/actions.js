@@ -14,51 +14,19 @@ export const addCar = async (formData) => {
   try {
     await connectDb();
     const newCar = new Car(data);
-    console.log(newCar);
+
     await newCar.save();
   } catch (error) {
     console.log(error);
   }
   revalidatePath("/dashboard");
-  // redirect("/dashboard");
+  redirect("/dashboard");
 };
 
 export const updateCar = async (formData) => {
   const data = Object.fromEntries(formData);
-
   data.available = data.available === "on";
-  const images = formData
-    .getAll("imageUrl")
-    .filter((image) => image.name !== "");
-
-  const imageUploadPromises = [];
-
-  if (images[0].name === "undefined") {
-    console.log("no files ");
-    throw new Error("No images");
-  }
-
-  for (const image of images) {
-    // Assuming image is a File object, extract the file data
-    try {
-      const blob = await put(image.name, image, {
-        access: "public",
-      });
-      imageUploadPromises.push(blob.url);
-      console.log(" image uploded");
-      await new Media({ url: blob.url }).save();
-      console.log("success DB");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  // Wait for all image uploads to complete
-  const uploadedImages = await Promise.all(imageUploadPromises);
-
-  // Add the uploaded images to the propertyData object
-  data.imageUrl = uploadedImages;
-
-  console.log(data);
+  data.imageUrl = JSON.parse(data.imageUrl);
 
   try {
     await Car.findByIdAndUpdate(data.id, data);

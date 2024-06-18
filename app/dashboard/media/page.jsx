@@ -11,10 +11,10 @@ const page = async () => {
       <Link href={`/dashboard/media/add`}>Add Media</Link>
 
       <div className=" md:grid grid-cols-8 gap-2">
-        {media.map((image) => (
-          <div key={image}>
+        {media.map((image, index) => (
+          <div key={index}>
             <Image src={image.url} width={200} height={200} alt={image.url} />
-            <DeleteMedia id={image._id.toString()} />
+            <DeleteMedia imageUrl={image.url} mediaId={image._id.toString()} />
           </div>
         ))}
       </div>

@@ -1,8 +1,6 @@
 import React from "react";
 import { fetchMedia } from "@/app/lib/data";
 import Add from "@/components/dashboard/Add";
-import FindByVin from "@/components/dashboard/FindByVin";
-import SearchFilter from "@/components/SearchFilter";
 
 const page = async () => {
   const media = await fetchMedia();

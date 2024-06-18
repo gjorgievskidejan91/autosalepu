@@ -30,9 +30,20 @@ export const fetchCarById = async (id) => {
   try {
     await connectDb();
     const car = await Car.findById(id);
-    return car;
+
+    if (!car) {
+      throw new Error(`Car with id ${id} not found`);
+    }
+
+    const carPlain = {
+      ...car.toObject(),
+      _id: car._id.toString(),
+    };
+
+    return carPlain;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
+    throw error;
   }
 };
 
@@ -40,7 +51,7 @@ export const fetchMedia = async () => {
   noStore();
   try {
     await connectDb();
-    const media = await Media.find({}).sort({ createdAt: -1 }).limit(10);
+    const media = await Media.find({}).sort({ createdAt: -1 }).limit(50);
     return media;
   } catch (error) {
     console.log(error);
@@ -97,6 +108,7 @@ export const fetchLatestCars = async () => {
 };
 
 export const fetchForms = async () => {
+  noStore();
   try {
     await connectDb();
     const forms = await Form.find({});

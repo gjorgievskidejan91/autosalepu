@@ -19,30 +19,11 @@ export const sendFinanceForm = async (formData) => {
     await connectDb();
 
     const newForm = new Form(formData);
-    console.log(newForm);
+
     await newForm.save();
-    console.log(newForm);
+    revalidatePath("/dashboard/messages");
     return { message: "Successfuly Send!", status: 200 };
   } catch (error) {
     return { message: "Failed to send a form" };
-  }
-};
-
-export const example = async (formData) => {
-  const validatedFields = CreateForm.safeParse(formData);
-
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing Fields. Failed to Send Form.",
-    };
-  }
-
-  try {
-    await connectDb();
-
-    return { message: "Successfully yea", status: 200 };
-  } catch (error) {
-    return { message: "Database error" };
   }
 };

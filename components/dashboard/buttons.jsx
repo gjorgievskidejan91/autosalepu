@@ -6,7 +6,6 @@ import { deleteCar, updateCarStatus } from "@/app/lib/actions";
 import { useFormStatus } from "react-dom";
 import { deleteMedia } from "@/app/lib/media";
 import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -35,10 +34,10 @@ export function EditButton({ id }) {
   );
 }
 
-export const DeleteMedia = ({ id }) => {
+export const DeleteMedia = ({ imageUrl, mediaId }) => {
   const handleDelete = async () => {
     try {
-      const res = await deleteMedia(id);
+      const res = await deleteMedia(imageUrl, mediaId);
       toast.success(res.message);
     } catch (error) {
       console.log(error);

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { addCar } from "@/app/lib/actions";
 import { SubmitButton } from "./buttons";
-
 import SelectImages from "./SelectImages";
 
 const Add = ({ images }) => {
