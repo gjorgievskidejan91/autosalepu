@@ -10,6 +10,7 @@ export default function Home() {
     <div>
       <Hero />
       {/* <FeaturedCars /> */}
+      <h1 className="text-center text-4xl font-bold mb-6">Latest Cars</h1>
       <Suspense fallback={<CarCardSkeleton />}>
         <HomeCars />
       </Suspense>

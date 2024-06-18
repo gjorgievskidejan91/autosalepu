@@ -1,6 +1,6 @@
 // components/Hero.js
 import Image from "next/image";
-
+import car from "../public/car.png";
 const Hero = () => {
   return (
     <>
@@ -14,14 +14,14 @@ const Hero = () => {
               Discover the perfect cars that suits your needs.
             </p>
             <Image
-              src="/car.png" // Replace with your image path
+              src={car} // Replace with your image path
               alt="Car Image"
               // layout="fill"
               // objectFit="contain"
               // quality={100}
               width={900}
               height={400}
-              className="object-cover md:h-[400px] mt-[-53px] mx-auto rounded-xl   "
+              className=" object-cover md:h-[400px] mt-[-53px] mx-auto rounded-xl   "
             />
           </div>
         </div>

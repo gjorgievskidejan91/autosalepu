@@ -8,7 +8,7 @@ export const fetchCars = async () => {
     await connectDb();
 
     // Fetch cars and sort by createdAt in descending order
-    const data = await Car.find({}).sort({ createdAt: -1 });
+    const data = await Car.find({}).limit(4).sort({ createdAt: -1 });
 
     // Convert each car document to a plain object
     const plainData = data.map((car) => ({
@@ -63,6 +63,7 @@ const ITEMS_PER_PAGE = 4; // Define the number of items per page
 // Define a function for fetching filtered cars
 export const fetchFilteredCars = async (query, currentPage) => {
   noStore();
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     await connectDb();
@@ -77,7 +78,7 @@ export const fetchFilteredCars = async (query, currentPage) => {
 
     // Execute the query to fetch cars with pagination
     const cars = await Car.find(searchQuery)
-      .sort({ createdAt: -1 }) // Sort by createdAt in descending order
+      .sort({ available: -1, createdAt: -1 }) // Sort by createdAt in descending order
       .limit(ITEMS_PER_PAGE)
       .skip(offset);
 
@@ -107,6 +108,33 @@ export const fetchLatestCars = async () => {
   }
 };
 
+// Fetch total cars for pagination search ////
+
+export async function fetchTotalCars(query) {
+  try {
+    await connectDb();
+
+    const searchQuery = {
+      $or: [
+        { make: { $regex: query, $options: "i" } },
+        { model: { $regex: query, $options: "i" } },
+        { year: { $regex: query, $options: "i" } },
+        { price: { $regex: query, $options: "i" } },
+        { status: { $regex: query, $options: "i" } },
+      ],
+    };
+
+    const count = await Car.countDocuments(searchQuery);
+
+    const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of cars.");
+  }
+}
+
+// Fetch Forms
 export const fetchForms = async () => {
   noStore();
   try {

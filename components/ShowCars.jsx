@@ -1,7 +1,6 @@
 import CarCard from "./CarCard";
-import { fetchCars, fetchFilteredCars } from "@/app/lib/data";
-import Pagination from "./Pagination";
-import SearchFilter from "./SearchFilter";
+import { fetchFilteredCars } from "@/app/lib/data";
+
 const ShowCars = async ({ query, currentPage }) => {
   const cars = await fetchFilteredCars(query, currentPage);
 
@@ -10,23 +9,19 @@ const ShowCars = async ({ query, currentPage }) => {
   }
 
   return (
-    <div>
-      <>
-        <SearchFilter />
-        <section className="px-4 py-6">
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 ">
-              {cars.length === 0 ? (
-                <p>No Properties Found</p>
-              ) : (
-                cars.map((car, index) => <CarCard car={car} key={index} />)
-              )}
-            </div>
-            {/* <Pagination /> */}
+    <>
+      <section className="px-4 py-6 bg-slate-200 dark:bg-slate-800 ">
+        <div className="container-xl lg:container m-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {cars.length === 0 ? (
+              <p>No Properties Found</p>
+            ) : (
+              cars.map((car, index) => <CarCard car={car} key={index} />)
+            )}
           </div>
-        </section>
-      </>
-    </div>
+        </div>
+      </section>
+    </>
   );
 };
 

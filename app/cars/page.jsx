@@ -3,18 +3,20 @@ import ShowCars from "@/components/ShowCars";
 import { Suspense } from "react";
 import CarCardSkeleton from "@/components/CarCardSkeleton";
 import Pagination from "@/components/Pagination";
-
-const CarsPage = ({ searchParams }) => {
+import { fetchTotalCars } from "../lib/data";
+const CarsPage = async ({ searchParams }) => {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
 
+  const totalPages = await fetchTotalCars(query);
   return (
-    <div>
-      <div className="">
-        <Suspense fallback={<CarCardSkeleton />}>
-          <ShowCars query={query} currentPage={currentPage} />
-        </Suspense>
-        <Pagination />
+    <div id="showCars">
+      <Suspense fallback={<CarCardSkeleton />}>
+        <ShowCars query={query} currentPage={currentPage} />
+      </Suspense>
+
+      <div className="mt-5 flex w-full justify-center">
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );

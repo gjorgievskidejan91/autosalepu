@@ -19,7 +19,7 @@ export const addCar = async (formData) => {
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/dashboard");
+  revalidatePath("/cars");
   redirect("/dashboard");
 };
 
@@ -59,6 +59,7 @@ export const deleteCar = async (id) => {
 };
 
 export const sendMessage = async (formData) => {
+  console.log(formData);
   const parse = contactFormSchema.safeParse(formData);
 
   if (!parse.success) {

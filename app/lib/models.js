@@ -121,6 +121,7 @@ export const messageSchema = new mongoose.Schema(
     carOfInterest: {
       type: Schema.Types.ObjectId,
       ref: "Car",
+      default: null,
     },
   },
   { timestamps: true }

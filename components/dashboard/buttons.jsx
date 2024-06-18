@@ -126,7 +126,8 @@ export function BackButton() {
 
   function handleClick(e) {
     e.preventDefault();
-    router.back();
+
+    router.push("/cars");
   }
   return (
     <button

@@ -3,7 +3,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import connectDb from "@/config/database";
 import { Media } from "./models";
-import cloudinary from "@/config/cloudinary";
 import { put, del } from "@vercel/blob";
 
 export const addMedia = async (formData) => {
@@ -29,11 +28,11 @@ export const addMedia = async (formData) => {
         console.log(error);
       }
     }
+    revalidatePath("/dashboard/media");
+    redirect("/dashboard/media");
   } catch (error) {
     console.log(error);
   }
-  revalidatePath("/dashboard/media");
-  redirect("/dashboard/media");
 };
 
 export const deleteMedia = async (imageUrl, mediaId) => {

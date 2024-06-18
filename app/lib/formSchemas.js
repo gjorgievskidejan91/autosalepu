@@ -7,7 +7,7 @@ export const contactFormSchema = z.object({
   email: z.string().email({ message: "Enter Valid Email" }),
   phone: z.string().optional(),
   message: z.string().min(10, { message: "Message is required" }),
-  carOfInterest: z.string().optional(),
+  // carOfInterest: z.string().optional(),
 });
 
 export const financeFormSchema = z.object({

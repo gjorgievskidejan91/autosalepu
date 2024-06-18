@@ -11,9 +11,9 @@ const CarsTable = async () => {
   }
   return (
     <div>
-      <div className="container mx-auto my-5">
+      <div className="px-3 mx-auto my-5">
         <h2 className="text-2xl font-bold mb-6">Car List</h2>
-        <div className="overflow-x-auto px-5">
+        <div className="overflow-x-auto">
           <table className="min-w-full border-x-2  shadow-md rounded-lg overflow-hidden">
             <thead>
               <tr>
