@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute="class">
           <Navbar />
           <Toaster position="bottom-center" />
-          <div className="mt-10">{children}</div>
+          <div>{children}</div>
           <Footer />
         </ThemeProvider>
       </body>

@@ -13,16 +13,14 @@ const Logo = () => {
   }, []);
   if (!mounted) {
     return (
-      <div className="flex items-center">
-        <Image
-          src="/logo1.png"
-          alt="Logo"
-          className="h-20 w-full"
-          width={150}
-          height={100}
-          priority
-        />
-      </div>
+      <Image
+        src="/logo1.png"
+        alt="Logo"
+        className=" w-full"
+        width={150}
+        height={100}
+        priority
+      />
     );
   }
   return (

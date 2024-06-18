@@ -16,7 +16,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-md focus:outline-none ring-2 ring-offset-2 ring-indigo-500"
+      className="p-2 rounded-md focus:outline-none ring-1 ring-indigo-500"
     >
       {theme === "dark" ? (
         <SunIcon className="w-6 h-6 text-yellow-500 " />

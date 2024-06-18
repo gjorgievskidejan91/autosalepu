@@ -15,7 +15,7 @@ const CarsPage = async ({ searchParams }) => {
         <ShowCars query={query} currentPage={currentPage} />
       </Suspense>
 
-      <div className="mt-5 flex w-full justify-center">
+      <div className="my-3 md:my-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
     </div>
