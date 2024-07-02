@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import HomeCars from "@/components/HomeCars";
 import { Suspense } from "react";
 import CarCardSkeleton from "@/components/CarCardSkeleton";
+import AuthComponent from "@/components/dashboard/AuthComponent";
 
 import FeaturedCars from "@/components/FeaturedCars";
 export default function Home() {
