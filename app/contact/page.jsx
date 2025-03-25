@@ -35,15 +35,15 @@ export default function page() {
           <div className="space-y-4">
             <div>
               <h3 className="text-xl font-semibold">Our Location</h3>
-              <p>1234 Street Name, City, State, ZIP Code</p>
+              <p>12631 Imperial Hwy F202-1 Santa Fe Springs CA 90670</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold">Phone</h3>
-              <p>(123) 456-7890</p>
+              <p>(909) 569-8326</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold">Email</h3>
-              <p>info@yourcompany.com</p>
+              <p>sotirthanasi92@gmail.com</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold">Working Hours</h3>
